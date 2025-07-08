@@ -4,11 +4,9 @@ import { join } from "path";
 
 // src/InternalFontSlice.ts
 import createFontSlice from "font-slice";
-var InternalFontSlice = async (fontPath, outputPath) => {
+var InternalFontSlice = async (options) => {
   return await createFontSlice({
-    fontPath,
-    outputDir: outputPath,
-    preview: false
+    ...options
   });
 };
 
@@ -20,13 +18,15 @@ var index_default = (api) => {
       schema(joi) {
         return joi.alternatives().try(
           joi.object({
-            font: joi.string().required(),
-            output: joi.string().default("font-slice")
+            fontPath: joi.string().required(),
+            outputDir: joi.string().optional().default("font-slice"),
+            formats: joi.array().min(1).default(["woff2"])
           }),
           joi.array().items(
             joi.object({
-              font: joi.string().required(),
-              output: joi.string().default("font-slice")
+              fontPath: joi.string().required(),
+              outputDir: joi.string().optional().default("font-slice"),
+              formats: joi.array().min(1).default(["woff2"])
             })
           )
         ).allow(null);
@@ -38,7 +38,7 @@ var index_default = (api) => {
   api.onBuildComplete(async () => {
     const arrayifyFontSlice = Array.isArray(api.config.fontSlice) ? api.config.fontSlice : [api.config.fontSlice];
     return await Promise.all(arrayifyFontSlice.map((item) => {
-      return genBuilder(item.font, item.output, api);
+      return genBuilder(item, api);
     }));
   });
   api.modifyHTML(($) => {
@@ -50,9 +50,9 @@ var index_default = (api) => {
     return $;
   });
 };
-async function genBuilder(font, output, api) {
-  const absFont = join(api.cwd, font);
-  const absOutput = join(api.paths.absOutputPath, output);
+async function genBuilder(option, api) {
+  const absFont = join(api.cwd, option.fontPath);
+  const absOutput = join(api.paths.absOutputPath, option.outputDir);
   if (!existsSync(absFont)) {
     api.logger.error(`[font-slice] Font file not found: ${absFont}`);
     return;
@@ -60,8 +60,13 @@ async function genBuilder(font, output, api) {
   if (!existsSync(absOutput)) {
     mkdirSync(absOutput, { recursive: true });
   }
-  api.logger.info(`[font-slice] slicing font: ${font}`);
-  return await InternalFontSlice(absFont, absOutput);
+  api.logger.info(`[font-slice] slicing font: ${option.fontPath}, outputDir: ${option.outputDir}, formats: ${option.formats}`);
+  return await InternalFontSlice({
+    ...option,
+    fontPath: absFont,
+    outputDir: absOutput,
+    preview: false
+  });
 }
 export {
   index_default as default
