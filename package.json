@@ -1,0 +1,38 @@
+{
+  "name": "font-slice-plugin",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xushuosean/font-slice-plugin.git"
+  },
+  "homepage": "https://github.com/xushuosean/font-slice-plugin",
+  "bugs": {
+    "url": "https://github.com/xushuosean/font-slice-plugin/issues"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "prepublishOnly": "yarn build",
+    "umibuild": "umi build"
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@umijs/core": "^4.4.11",
+    "@umijs/types": "^3.5.43",
+    "jest": "^30.0.4",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "umi": "^4.4.11"
+  },
+  "dependencies": {
+    "font-slice": "^1.0.2"
+  }
+}
