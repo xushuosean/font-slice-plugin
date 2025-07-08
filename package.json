@@ -1,5 +1,5 @@
 {
-  "name": "@sean/font-slice-plugin",
+  "name": "font-slice-umi-plugin",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "repository": {
