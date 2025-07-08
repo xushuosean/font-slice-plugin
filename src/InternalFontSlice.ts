@@ -1,9 +1,9 @@
 import createFontSlice from 'font-slice';
 
-export const InternalFontSlice = async (fontPath: string, outputPath: string) => {
+export type Option = Parameters<typeof createFontSlice>[0];
+
+export const InternalFontSlice = async (options: Option) => {
   return await createFontSlice({
-    fontPath,
-    outputDir: outputPath,
-    preview: false,
+    ...options,
   });
 }

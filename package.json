@@ -1,14 +1,14 @@
 {
   "name": "font-slice-umi-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./dist/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xushuosean/font-slice-plugin.git"
+    "url": "git+https://github.com/xushuosean/font-slice-umi-plugin.git"
   },
-  "homepage": "https://github.com/xushuosean/font-slice-plugin",
+  "homepage": "https://github.com/xushuosean/font-slice-umi-plugin",
   "bugs": {
-    "url": "https://github.com/xushuosean/font-slice-plugin/issues"
+    "url": "https://github.com/xushuosean/font-slice-umi-plugin/issues"
   },
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --clean",
@@ -19,7 +19,15 @@
   "files": [
     "dist"
   ],
-  "keywords": [],
+  "keywords": [
+    "umi-plugin",
+    "font-slice",
+    "web-font",
+    "performance-optimization",
+    "font-subsetting",
+    "font-optimization",
+    "static-assets"
+  ],
   "author": "",
   "license": "ISC",
   "description": "",
